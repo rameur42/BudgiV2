@@ -72,7 +72,7 @@ Relation : une période possède plusieurs dépenses (1-N).
 ## Choix techniques
 
 - **Système de modules backend**: CommonJS, le format par défaut de NestJS, compatible avec Jest sans configuration supplémentaire.
-- **Linter**: ESLint, standard du marché et déjà utilisé par le backend NestJS, pour garder un outillage cohérent dans tout le projet.
+- **Linter : ESLint côté frontend**, standard du marché avec les règles officielles pour React ; **Oxlint côté backend**, configuration par défaut de NestJS.
 - **Base de données**: PostgreSQL 16 via Docker Compose**, avec un volume nommé pour persister les données et un healthcheck (`pg_isready`) pour savoir quand la base est prête à accepter des connexions.
 - **Montants : type Decimal** (`numeric` en base, `decimal.js` dans le code), pour éviter les erreurs d'arrondi des nombres à virgule flottante.
 - **Séparation logique / affichage** : les fonctions de calcul renvoient des données (statut + montant), jamais de texte. Le choix des messages revient au frontend.
