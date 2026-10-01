@@ -19,7 +19,11 @@ tests, validation, Docker, CI, déploiement.
 
 ## Règles métier
 
+- **Écart** = dépense prévue − total dépensé (positif : en avance ; négatif : en retard)
+- **Budget restant par jour** : arrondi à l'euro inférieur, pour ne jamais inciter à dépasser le budget
+
 ### Calculs
+
 - **Budget total** = budget journalier × nombre de jours de la période (bornes incluses)
 - **Jours écoulés** = jours depuis le début de la période, aujourd'hui inclus
 - **Dépense prévue** = budget journalier × jours écoulés
@@ -28,13 +32,16 @@ tests, validation, Docker, CI, déploiement.
 - **Budget restant par jour** = (budget total − total dépensé) ÷ jours restants
 
 ### Cas particuliers
+
 - Le dernier jour de la période : on affiche le budget restant total
 - Si le budget total est dépassé : on affiche « Budget dépassé de X € »
 
 ### Contraintes
+
 - Deux périodes ne peuvent pas se chevaucher
 - Une dépense ne peut être enregistrée que si sa date appartient à une période existante
 - un montant ne peut pas etre negatif
+
 ## Modèle de données
 
 ### Period
@@ -67,12 +74,14 @@ Relation : une période possède plusieurs dépenses (1-N).
 - **Système de modules backend**: CommonJS, le format par défaut de NestJS, compatible avec Jest sans configuration supplémentaire.
 - **Linter**: ESLint, standard du marché et déjà utilisé par le backend NestJS, pour garder un outillage cohérent dans tout le projet.
 - **Base de données**: PostgreSQL 16 via Docker Compose**, avec un volume nommé pour persister les données et un healthcheck (`pg_isready`) pour savoir quand la base est prête à accepter des connexions.
+- **Montants : type Decimal** (`numeric` en base, `decimal.js` dans le code), pour éviter les erreurs d'arrondi des nombres à virgule flottante.
+- **Séparation logique / affichage** : les fonctions de calcul renvoient des données (statut + montant), jamais de texte. Le choix des messages revient au frontend.
 
 ## Lancer le projet
 
 ### Prérequis
 
-- [Node.js](https://nodejs.org/) (version LTS)
+- [Node.js](https://nodejs.org/) Node.js 24 (voir .nvmrc)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - Git
 
